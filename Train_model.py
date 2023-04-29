@@ -23,7 +23,7 @@ def create_model():
 
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
-    filepath = "action.h5"
+    filepath = "action_v4.h5"
     checkpoint1 = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
     callbacks_list = [checkpoint1]
 
@@ -43,7 +43,7 @@ def train_model():
 
     model.summary()
 
-    model.save('action.h5')
+    model.save('action_v4.h5')
 
 train_model()
 

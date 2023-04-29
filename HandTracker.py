@@ -133,7 +133,7 @@ def start_detection():
     sentence = []
     threshold = 0.8
 
-    model = load_model("action_v3.h5")
+    model = load_model("action_v4.h5")
 
     cap = cv2.VideoCapture(0)
     # Set mediapipe model

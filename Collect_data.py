@@ -13,7 +13,7 @@ DATA_PATH = os.path.join('MP_Data')
 # Actions that we are try to detect
 #actions = np.array(['hello', 'thanks', 'iloveyou'])
 #actions = rv.get_actions()
-actions = (['nicetomeetyou'])
+actions = (['welcome'])
 # Thirty sequences worth of data for each action
 no_of_sequences = 30
 

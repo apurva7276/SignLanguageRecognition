@@ -12,7 +12,7 @@ print(actions)
 
 X_test = np.load(os.path.join(DATA_PATH, "X_test.npy"))
 y_test = np.load(os.path.join(DATA_PATH, "y_test.npy"))
-model = load_model("action.h5")
+model = load_model("action_v4.h5")
 res = model.predict(X_test)
 
 print(res)
