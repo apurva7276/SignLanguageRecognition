@@ -8,12 +8,11 @@ import Required_variables as rv
 # It creates the required folders
 
 # Path for exported data i.e numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+DATA_PATH = os.path.join('MP_Data2')
 
 # Actions that we are try to detect
-#actions = np.array(['hello', 'thanks', 'iloveyou'])
 #actions = rv.get_actions()
-actions = (['name'])
+actions = (['equal'])
 # Thirty sequences worth of data for each action
 no_of_sequences = 30
 

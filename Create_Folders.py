@@ -3,7 +3,7 @@ import numpy as np
 import Required_variables as rv
 
 # Path for exported data i.e numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+DATA_PATH = os.path.join('MP_Data2')
 
 # Actions that we are try to detect
 #actions = np.array(['hello', 'thanks', 'iloveyou'])

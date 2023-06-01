@@ -5,12 +5,12 @@ import os
 import Required_variables as rv
 
 # Path for exported data i.e numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+DATA_PATH = os.path.join('MP_Data3')
 
 # Actions that we are try to detect
 #actions = np.array(['hello', 'thanks', 'iloveyou'])
-actions = rv.get_actions()
-
+#actions = rv.get_actions()
+actions=rv.detect_actions_in_folder()
 # Thirty sequences worth of data for each action
 no_of_sequences = 30
 
@@ -32,7 +32,6 @@ X = np.array(sequences)
 y = np_utils.to_categorical(labels).astype(int)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05)
 
-
 # Saves the test and train split data into .npy files
 # These files are accessed from Preprocess_data.py
 def save(name, np_array):
@@ -40,7 +39,7 @@ def save(name, np_array):
     np.save(npy_path, np_array)
 
 
-save("X_train", X_train)
-save("X_test", X_test)
-save("y_train", y_train)
-save("y_test", y_test)
+save("X_train_2", X_train)
+save("X_test_2", X_test)
+save("y_train_2", y_train)
+save("y_test_2", y_test)

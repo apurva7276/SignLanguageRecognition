@@ -6,11 +6,15 @@ import os
 import Required_variables as rv
 
 # Path for exported data i.e numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+DATA_PATH = os.path.join('MP_Data3')
+
+#model name
+modelName= rv.get_modelName()
 
 # Actions that we are try to detect
 #actions = np.array(['hello', 'thanks', 'iloveyou'])
-actions = rv.get_actions()
+#actions = rv.get_actions()
+actions = rv.detect_actions_in_folder()
 
 def create_model():
     model = Sequential()
@@ -23,7 +27,7 @@ def create_model():
 
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
-    filepath = "action_v4.h5"
+    filepath = modelName
     checkpoint1 = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
     callbacks_list = [checkpoint1]
 
@@ -33,17 +37,17 @@ def train_model():
     model, callback_list = create_model()
 
     #load data created using Preprocess_data.py
-    X_train = np.load(os.path.join(DATA_PATH, "X_train.npy"))
-    y_train = np.load(os.path.join(DATA_PATH, "y_train.npy"))
+    X_train = np.load(os.path.join(DATA_PATH, "X_train_2.npy"))
+    y_train = np.load(os.path.join(DATA_PATH, "y_train_2.npy"))
 
     print(X_train)
     print(y_train)
 
-    model.fit(X_train, y_train, epochs=100, callbacks=[callback_list])
+    model.fit(X_train, y_train, epochs=64, callbacks=[callback_list])
 
     model.summary()
 
-    model.save('action_v4.h5')
+    model.save(modelName)
 
 train_model()
 

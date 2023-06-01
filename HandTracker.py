@@ -8,11 +8,15 @@ from keras.models import load_model
 import Required_variables as rv
 
 # Path for exported data i.e numpy arrays
-DATA_PATH = os.path.join('MP_Data')
+DATA_PATH = os.path.join('MP_Data3')
+
+#model name
+modelName = rv.get_modelName()
 
 # Actions that we are try to detect
 # actions = np.array(['hello', 'thanks', 'iloveyou'])
-actions = rv.get_actions()
+#actions = rv.get_actions()
+actions = rv.detect_actions_in_folder()
 
 # Thirty sequences worth of data for each action
 no_of_sequences = 30
@@ -26,7 +30,7 @@ mp_holistic = mp.solutions.holistic
 
 #
 def mediapipe_detection(image, model):
-    # the mediapipe holistic object(model) requires the iage to be in
+    # the mediapipe holistic object(model) requires the image to be in
     # RGB type and the CV2 object(cap) outputs a BGR type image
     # here we are converting the image from BGR to RGB
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -55,7 +59,7 @@ def extract_keypoints(results):
     pose = np.array([[res.x, res.y, res.z, res.visibility] for res in
                      results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(33 * 4)
 
-    # face and hand landmarks will be eampty if face and hands are not visible in the frame
+    # face and hand landmarks will be empty if face and hands are not visible in the frame
     # Thats why we are using the else statement , if landmarks are empty we are getting
     # numpy arrays of same length but filled with zero's
     face = np.array([[res.x, res.y, res.z] for res in
@@ -75,49 +79,6 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh]), flag1
 
 
-def demo():
-    with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-        while cap.isOpened():
-            success, frame = cap.read()
-            # detect the pose,face and hands
-            image, results = mediapipe_detection(frame, holistic)
-
-            # draw landmarks on the video output for visualization!
-            # comment this to turn of the landmarks drawn on live video
-            draw_landmarks(image, results)
-
-            # if results.multi_hand_landmarks:
-            #     for hands_ms in results.multi_hand_landmarks:
-            #         mp_drawing.draw_landmarks(img, hands_ms, mpHands.HAND_CONNECTIONS)
-            # img= cv2.flip(img, 1)
-
-            cv2.imshow("output", image)
-            if cv2.waitKey(100) & 0xFF == ord('q'):
-                break
-
-
-def draw_styled_landmarks(image, results):
-    # Draw face connections
-    mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_TESSELATION,
-                              mp_drawing.DrawingSpec(color=(80, 110, 10), thickness=1, circle_radius=1),
-                              mp_drawing.DrawingSpec(color=(80, 256, 121), thickness=1, circle_radius=1)
-                              )
-    # Draw pose connections
-    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
-                              mp_drawing.DrawingSpec(color=(80, 22, 10), thickness=2, circle_radius=4),
-                              mp_drawing.DrawingSpec(color=(80, 44, 121), thickness=2, circle_radius=2)
-                              )
-    # Draw left hand connections
-    mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                              mp_drawing.DrawingSpec(color=(121, 22, 76), thickness=2, circle_radius=4),
-                              mp_drawing.DrawingSpec(color=(121, 44, 250), thickness=2, circle_radius=2)
-                              )
-    # Draw right hand connections
-    mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
-                              mp_drawing.DrawingSpec(color=(245, 117, 66), thickness=2, circle_radius=4),
-                              mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2)
-                              )
-
 
 colors = [(245, 117, 16), (117, 245, 16), (16, 117, 245)]
 
@@ -135,9 +96,9 @@ def start_detection():
     # 1. New detection variables
     sequence = []
     sentence = []
-    threshold = 0.8
+    threshold = 0.5
 
-    model = load_model("action_v4.h5")
+    model = load_model(modelName)
     flag = False
 
     cap = cv2.VideoCapture(0)
@@ -153,7 +114,7 @@ def start_detection():
             # print(results)
 
             # Draw landmarks
-            # draw_landmarks(image, results)
+            #draw_landmarks(image, results)
 
             # 2. Prediction logic
             keypoints, flag = extract_keypoints(results)
