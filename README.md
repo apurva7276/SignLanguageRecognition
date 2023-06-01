@@ -16,6 +16,6 @@ Group Members
 
 ---
 
-   1. Download [MP_Data](https://tinyurl.com/MPSignData) ZIP from given link and then extract it after that place extracted folder inside ```SignLanguageRecognition``` folder.
+   1. Download [MP_Data](https://tinyurl.com/MP-Data-latest) ZIP from given link and then extract it after that place extracted folder inside ```SignLanguageRecognition``` folder.
 
 ---
